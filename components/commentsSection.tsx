@@ -50,19 +50,17 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       return;
     }
 
-    const { userName } = JSON.parse(storedUser); // Extract the username from stored user data
+    const { username } = JSON.parse(storedUser); // Extract the username from stored user data
 
     const newComment: ThreadComment = {
       id: Date.now(),
       thread: thread.id,
       content: commentContent,
-      creator: { userName: userName }, // Use the stored username here
+      creator: { userName: username }, // Use the stored username here
       creationDate: new Date().toISOString(),
       replies: [],
-      parentCommentId: parentCommentId ?? undefined, // Set parentCommentId if available
+      // parentCommentId: parentCommentId ?? undefined,
     };
-
-    console.log("New Comment:", newComment); // Log the new comment
 
     // Update comments for the current thread
     const updatedComments = [...comments, newComment];
@@ -94,11 +92,22 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   };
 
   const handleAddReply = (parentId: number, content: string) => {
+    // Retrieve the logged-in user from localStorage
+    const storedUser = localStorage.getItem("user");
+
+    // Check if the user exists
+    if (!storedUser) {
+      setError("Please log in to reply");
+      return;
+    }
+
+    const { username } = JSON.parse(storedUser); // Extract the username from stored user data
+
     const newReply: ThreadComment = {
       id: Date.now(),
       thread: thread.id,
       content,
-      creator: { userName: "guest" }, // Or use actual username if available
+      creator: { userName: username }, // Use the stored username here
       creationDate: new Date().toISOString(),
       replies: [],
       parentCommentId: parentId, // Include parentCommentId here
