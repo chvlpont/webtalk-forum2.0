@@ -40,11 +40,22 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       return;
     }
 
+    // Retrieve the logged-in user from localStorage
+    const storedUser = localStorage.getItem("user");
+
+    // Check if the user exists
+    if (!storedUser) {
+      setError("Please log in to comment");
+      return;
+    }
+
+    const { username } = JSON.parse(storedUser); // Extract the username from stored user data
+
     const newComment: ThreadComment = {
       id: Date.now(),
       thread: thread.id,
       content: commentContent,
-      creator: { userName: "guest" },
+      creator: { userName: username }, // Use the stored username here
       creationDate: new Date().toISOString(),
       replies: [],
     };
@@ -52,12 +63,14 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
     // Update comments for the current thread
     const updatedComments = [...comments, newComment];
     setComments(updatedComments);
+
     // Save all comments but with proper filtering applied
     const allComments = getCommentsFromLocalStorage();
     const updatedAllComments = [
       ...allComments.filter((comment) => comment.thread !== thread.id),
       ...updatedComments,
     ];
+
     saveCommentsToLocalStorage(updatedAllComments);
     setCommentContent("");
     onAddComment(newComment);
