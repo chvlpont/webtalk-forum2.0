@@ -102,6 +102,8 @@ const Header: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Login Modal */}
       {isLoginModalOpen && (
         <div
           className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50"
@@ -117,10 +119,15 @@ const Header: React.FC = () => {
             >
               ×
             </button>
-            <Login />
+            <Login
+              closeLoginModal={closeLoginModal} // Pass the function to close the modal
+              openRegisterModal={openRegisterModal} // Pass the function to open the register modal
+            />
           </div>
         </div>
       )}
+
+      {/* Register Modal */}
       {isRegisterModalOpen && (
         <div
           className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50"
@@ -136,7 +143,10 @@ const Header: React.FC = () => {
             >
               ×
             </button>
-            <Register />
+            <Register
+              closeRegisterModal={closeRegisterModal}
+              openLoginModal={openLoginModal}
+            />
           </div>
         </div>
       )}

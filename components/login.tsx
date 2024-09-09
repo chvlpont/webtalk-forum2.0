@@ -1,8 +1,14 @@
-"use client";
-
 import React, { useState } from "react";
 
-const Login: React.FC = () => {
+interface LoginProps {
+  closeLoginModal: () => void;
+  openRegisterModal: () => void;
+}
+
+const Login: React.FC<LoginProps> = ({
+  closeLoginModal,
+  openRegisterModal,
+}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,6 +30,11 @@ const Login: React.FC = () => {
       console.log("No user found. Please register.");
       setError("No user found. Please register.");
     }
+  };
+
+  const handleRegisterClick = () => {
+    closeLoginModal(); // Close the login modal
+    openRegisterModal(); // Open the register modal
   };
 
   return (
@@ -49,6 +60,17 @@ const Login: React.FC = () => {
       >
         Login
       </button>
+
+      {/* Add a line break and center the register option */}
+      <div className="mt-4 text-center">
+        <p className="text-black">Don't have an account?</p>
+        <button
+          className="text-blue-500 underline"
+          onClick={handleRegisterClick}
+        >
+          Register
+        </button>
+      </div>
     </div>
   );
 };
