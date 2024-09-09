@@ -25,6 +25,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   const [commentContent, setCommentContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showCensored] = useState(true);
+  const [parentCommentId, setParentCommentId] = useState<number | null>(null); // Add state for parentCommentId if needed
 
   useEffect(() => {
     // Fetch and filter comments from local storage when thread ID changes
@@ -49,19 +50,23 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       return;
     }
 
-    const { username } = JSON.parse(storedUser); // Extract the username from stored user data
+    const { userName } = JSON.parse(storedUser); // Extract the username from stored user data
 
     const newComment: ThreadComment = {
       id: Date.now(),
       thread: thread.id,
       content: commentContent,
-      creator: { userName: username }, // Use the stored username here
+      creator: { userName: userName }, // Use the stored username here
       creationDate: new Date().toISOString(),
       replies: [],
+      parentCommentId: parentCommentId ?? undefined, // Set parentCommentId if available
     };
+
+    console.log("New Comment:", newComment); // Log the new comment
 
     // Update comments for the current thread
     const updatedComments = [...comments, newComment];
+    console.log("Updated Comments List:", updatedComments); // Log updated comments list
     setComments(updatedComments);
 
     // Save all comments but with proper filtering applied
@@ -71,8 +76,10 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       ...updatedComments,
     ];
 
+    console.log("Saving Updated All Comments:", updatedAllComments); // Log comments to be saved
     saveCommentsToLocalStorage(updatedAllComments);
     setCommentContent("");
+    setParentCommentId(null); // Reset parentCommentId after adding comment
     onAddComment(newComment);
     setError(null);
   };
@@ -91,9 +98,10 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       id: Date.now(),
       thread: thread.id,
       content,
-      creator: { userName: "guest" },
+      creator: { userName: "guest" }, // Or use actual username if available
       creationDate: new Date().toISOString(),
       replies: [],
+      parentCommentId: parentId, // Include parentCommentId here
     };
 
     const updateReplies = (comments: ThreadComment[]): ThreadComment[] => {
@@ -116,6 +124,11 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
     const updatedComments = updateReplies(comments);
     setComments(updatedComments);
+
+    // Log the new reply and the updated comments
+    console.log("New Reply Added:", newReply);
+    console.log("Updated Comments:", updatedComments);
+
     const allComments = getCommentsFromLocalStorage();
     const updatedAllComments = [
       ...allComments.filter((comment) => comment.thread !== thread.id),

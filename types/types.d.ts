@@ -31,6 +31,7 @@ interface ThreadComment {
   creationDate: string;
   isAnswer?: boolean;
   replies?: ThreadComment[];
+  parentCommentId?: number;
 }
 
 type ThreadTag = {
