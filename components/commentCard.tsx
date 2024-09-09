@@ -8,8 +8,8 @@ type CommentCardProps = {
   onSelect: (comment: ThreadComment) => void;
   thread: Thread;
   onAddReply: (parentId: number, content: string) => void;
-  showCensored: boolean; // To determine if the content should be censored
-  isLocked: boolean; // To determine if the thread is locked
+  showCensored: boolean;
+  isLocked: boolean;
 };
 
 // Inappropriate words list

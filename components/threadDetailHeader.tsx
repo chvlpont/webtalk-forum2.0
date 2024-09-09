@@ -3,15 +3,15 @@ import { lockThread, unlockThread, deleteThread } from "../utils/localStorage";
 import { FaLock, FaUnlock, FaEllipsisV, FaTrash } from "react-icons/fa";
 
 type ThreadDetailHeaderProps = {
-  thread: Thread; // Now expecting a full thread object
+  thread: Thread;
   onCommentIconClick: () => void;
 };
 
 const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
-  const [isLocked, setIsLocked] = useState(thread.locked || false); // Initialize with thread.locked
-  const [showMenu, setShowMenu] = useState(false); // State to handle dropdown visibility
+  const [isLocked, setIsLocked] = useState(thread.locked || false);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     // Check if the user is logged in
@@ -43,7 +43,7 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
     if (window.confirm("Are you sure you want to delete this thread?")) {
       deleteThread(thread.id);
       console.log(`Thread ${thread.id} deleted`);
-      window.location.href = "/"; // Redirect to home or another appropriate page
+      window.location.href = "/";
     }
   };
 
@@ -53,7 +53,7 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
 
   return (
     <div className="thread-detail-header bg-white p-4 rounded-lg shadow-sm relative">
-      {/* Three dots menu positioned in the top right */}
+      {/* Three dots menu */}
       {isLoggedIn && (
         <div className="absolute top-2 right-2 my-3">
           <button

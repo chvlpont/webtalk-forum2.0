@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { FaRegCommentAlt, FaLock } from "react-icons/fa"; // Import lock icon
+import { FaRegCommentAlt, FaLock } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 
 type ThreadCardProps = {

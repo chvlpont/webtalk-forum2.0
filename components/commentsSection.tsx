@@ -6,7 +6,7 @@ import {
 } from "@/utils/localStorage";
 
 type CommentsSectionProps = {
-  thread: Thread; // Change to QNAThread if you want to use the extended type
+  thread: Thread;
   initialComments: ThreadComment[];
   onAddComment: (comment: ThreadComment) => void;
   isLocked: boolean;
