@@ -50,12 +50,12 @@ const Header: React.FC = () => {
       className="px-[10%] py-4 flex justify-between items-center w-full"
       style={{ boxShadow: "0px 1px 0px rgba(229, 231, 235, 0.5)" }}
     >
-      <div className="flex-1 text-center">
+      <div className="flex-1 flex items-center justify-start">
         <Link href="/">
           <span className="text-2xl font-bold text-white">WEBTALK</span>
         </Link>
       </div>
-      <div className="flex-1 text-center">
+      <div className="flex-1">
         <div className="relative">
           <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
