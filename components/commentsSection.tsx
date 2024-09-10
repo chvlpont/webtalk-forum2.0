@@ -175,7 +175,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
           />
           <button
             onClick={handleAddComment}
-            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="mt-2 px-3 py-1.5 bg-black text-white text-xs border border-gray-400 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600"
             disabled={isLocked}
           >
             Add Comment

@@ -12,6 +12,7 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
   const [username, setUsername] = useState("");
   const [isLocked, setIsLocked] = useState(thread.locked || false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   useEffect(() => {
     // Check if the user is logged in
@@ -40,15 +41,26 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this thread?")) {
-      deleteThread(thread.id);
-      console.log(`Thread ${thread.id} deleted`);
-      window.location.href = "/";
-    }
+    deleteThread(thread.id);
+    console.log(`Thread ${thread.id} deleted`);
+    window.location.href = "/";
   };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
+  };
+
+  const confirmDelete = () => {
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = () => {
+    handleDelete();
+    setShowDeleteConfirmation(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
   };
 
   return (
@@ -83,7 +95,7 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
                   </li>
                 )}
                 <li
-                  onClick={handleDelete}
+                  onClick={confirmDelete}
                   className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-red-500"
                 >
                   <FaTrash className="mr-2" /> Delete Thread
@@ -103,9 +115,34 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
 
       {/* Display message if the thread is locked */}
       {isLocked && (
-        <p className="mt-2 text-red-500">
+        <div className="mt-2 p-2 bg-gray-800 rounded text-red-500">
           This thread is locked. No further interactions are allowed.
-        </p>
+        </div>
+      )}
+
+      {/* Delete confirmation dialog */}
+      {showDeleteConfirmation && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-gray-800 text-white rounded-lg p-6 shadow-lg">
+            <p className="mb-4 text-center">
+              Are you sure you want to delete this thread?
+            </p>
+            <div className="flex justify-center space-x-4">
+              <button
+                className="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 text-white"
+                onClick={handleConfirmDelete}
+              >
+                Confirm
+              </button>
+              <button
+                className="bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-500 text-white"
+                onClick={handleCancelDelete}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
