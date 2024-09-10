@@ -59,7 +59,7 @@ const ThreadPage = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-3xl mx-auto p-4 ">
       <ThreadDetailHeader
         thread={thread}
         onCommentIconClick={scrollToComments}

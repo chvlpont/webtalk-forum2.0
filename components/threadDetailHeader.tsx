@@ -66,7 +66,7 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
   };
 
   return (
-    <div className="thread-detail-header bg-gray-900 bg-opacity-60 p-4 rounded-lg shadow-lg relative text-white">
+    <div className="thread-detail-header bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-600 shadow-lg relative text-white">
       {/* Three dots menu */}
       {isLoggedIn && (
         <div className="absolute top-2 right-2 my-3">

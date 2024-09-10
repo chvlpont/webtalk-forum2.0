@@ -93,7 +93,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
     <div
       className={`relative border p-3 rounded-lg mb-2 ${
         isSelected ? "border-4 border-green-500" : "border border-gray-700"
-      } bg-gray-800 bg-opacity-70 text-gray-200`}
+      } bg-gray-800 bg-opacity-50 text-gray-200`}
     >
       {isSelected && isQNA && (
         <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs p-1 rounded-lg">
