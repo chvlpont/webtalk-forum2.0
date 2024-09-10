@@ -1,8 +1,7 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, MouseEvent } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { FaEllipsisH } from "react-icons/fa";
 
-// Define the CommentCardProps type
 type CommentCardProps = {
   comment: ThreadComment;
   onSelect: (comment: ThreadComment) => void;
@@ -12,7 +11,6 @@ type CommentCardProps = {
   isLocked: boolean;
 };
 
-// Inappropriate words list
 const inappropriateWords = [
   "damn",
   "hell",
@@ -22,7 +20,6 @@ const inappropriateWords = [
   "stupid",
 ];
 
-// Function to censor text
 const censorText = (text: string): string => {
   return text
     .split(" ")
@@ -32,7 +29,6 @@ const censorText = (text: string): string => {
     .join(" ");
 };
 
-// Function to check if text requires censorship
 const requiresCensorship = (text: string): boolean => {
   return text
     .split(" ")
@@ -47,21 +43,12 @@ const CommentCard: React.FC<CommentCardProps> = ({
   showCensored,
   isLocked,
 }) => {
-  const cardKey = `comment-${comment.id}`;
-  const [isSelected, setIsSelected] = useState(() => {
-    const savedState = localStorage.getItem(cardKey);
-    return savedState === "true";
-  });
   const [showDropdown, setShowDropdown] = useState(false);
   const [isReplyFormVisible, setIsReplyFormVisible] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [isCensored, setIsCensored] = useState(
-    () => showCensored && requiresCensorship(comment.content)
+    showCensored && requiresCensorship(comment.content)
   );
-
-  useEffect(() => {
-    localStorage.setItem(cardKey, JSON.stringify(isSelected));
-  }, [isSelected, cardKey]);
 
   const handleIconClick = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -70,11 +57,9 @@ const CommentCard: React.FC<CommentCardProps> = ({
 
   const handleDropdownItemClick = (action: string) => {
     if (action === "mark-as-answer") {
-      setIsSelected(true);
-      onSelect(comment);
+      onSelect({ ...comment, isAnswer: true });
     } else if (action === "unmark-as-answer") {
-      setIsSelected(false);
-      onSelect(comment);
+      onSelect({ ...comment, isAnswer: false });
     }
     setShowDropdown(false);
   };
@@ -92,10 +77,12 @@ const CommentCard: React.FC<CommentCardProps> = ({
   return (
     <div
       className={`relative border p-3 rounded-lg mb-2 ${
-        isSelected ? "border-4 border-green-500" : "border border-gray-700"
+        comment.isAnswer
+          ? "border-4 border-green-500"
+          : "border border-gray-700"
       } bg-gray-800 bg-opacity-50 text-gray-200`}
     >
-      {isSelected && isQNA && (
+      {comment.isAnswer && isQNA && (
         <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs p-1 rounded-lg">
           Marked as answer
         </div>
@@ -113,12 +100,12 @@ const CommentCard: React.FC<CommentCardProps> = ({
           <button
             onClick={() =>
               handleDropdownItemClick(
-                isSelected ? "unmark-as-answer" : "mark-as-answer"
+                comment.isAnswer ? "unmark-as-answer" : "mark-as-answer"
               )
             }
             className="block px-4 py-2 text-gray-200 hover:bg-gray-700 w-full text-left"
           >
-            {isSelected ? "Unmark as answer" : "Mark as answer"}
+            {comment.isAnswer ? "Unmark as answer" : "Mark as answer"}
           </button>
         </div>
       )}
@@ -182,7 +169,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
               onSelect={onSelect}
               onAddReply={onAddReply}
               showCensored={showCensored}
-              isLocked={isLocked} // Pass isLocked down to replies
+              isLocked={isLocked}
             />
           ))}
         </ul>

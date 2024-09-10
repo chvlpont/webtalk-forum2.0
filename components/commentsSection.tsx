@@ -18,21 +18,23 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   onAddComment,
   isLocked,
 }) => {
-  // Initialize comments for the specific thread
   const [comments, setComments] = useState<ThreadComment[]>(() =>
     initialComments.filter((comment) => comment.thread === thread.id)
   );
   const [commentContent, setCommentContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showCensored] = useState(true);
-  const [parentCommentId, setParentCommentId] = useState<number | null>(null); // Add state for parentCommentId if needed
+  const [parentCommentId, setParentCommentId] = useState<number | null>(null);
 
   useEffect(() => {
-    // Fetch and filter comments from local storage when thread ID changes
     const storedComments = getCommentsFromLocalStorage();
-    setComments(
-      storedComments.filter((comment) => comment.thread === thread.id)
+    const threadComments = storedComments.filter(
+      (comment) => comment.thread === thread.id
     );
+    const sortedComments = threadComments.sort((a, b) =>
+      b.isAnswer && !a.isAnswer ? 1 : !b.isAnswer && a.isAnswer ? -1 : 0
+    );
+    setComments(sortedComments);
   }, [thread.id]);
 
   const handleAddComment = () => {
@@ -41,76 +43,82 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       return;
     }
 
-    // Retrieve the logged-in user from localStorage
     const storedUser = localStorage.getItem("user");
-
-    // Check if the user exists
     if (!storedUser) {
       setError("Please log in to comment");
       return;
     }
 
-    const { username } = JSON.parse(storedUser); // Extract the username from stored user data
+    const { username } = JSON.parse(storedUser);
 
     const newComment: ThreadComment = {
       id: Date.now(),
       thread: thread.id,
       content: commentContent,
-      creator: { userName: username }, // Use the stored username here
+      creator: { userName: username },
       creationDate: new Date().toISOString(),
       replies: [],
-      // parentCommentId: parentCommentId ?? undefined,
     };
 
-    // Update comments for the current thread
     const updatedComments = [...comments, newComment];
-    console.log("Updated Comments List:", updatedComments); // Log updated comments list
     setComments(updatedComments);
 
-    // Save all comments but with proper filtering applied
     const allComments = getCommentsFromLocalStorage();
     const updatedAllComments = [
       ...allComments.filter((comment) => comment.thread !== thread.id),
       ...updatedComments,
     ];
 
-    console.log("Saving Updated All Comments:", updatedAllComments); // Log comments to be saved
     saveCommentsToLocalStorage(updatedAllComments);
     setCommentContent("");
-    setParentCommentId(null); // Reset parentCommentId after adding comment
+    setParentCommentId(null);
     onAddComment(newComment);
     setError(null);
   };
 
   const handleCommentSelection = (selectedComment: ThreadComment) => {
-    // Move the selected comment to the top
-    const updatedComments = comments.filter(
-      (comment) => comment.id !== selectedComment.id
+    // Mark/unmark comment as answer
+    const updatedComments = comments.map((comment) =>
+      comment.id === selectedComment.id
+        ? { ...comment, isAnswer: !comment.isAnswer }
+        : comment
     );
-    setComments([selectedComment, ...updatedComments]);
-    saveCommentsToLocalStorage([selectedComment, ...updatedComments]);
+
+    // Move the marked comment to the top
+    const sortedComments = updatedComments.sort((a, b) =>
+      b.isAnswer && !a.isAnswer ? 1 : !b.isAnswer && a.isAnswer ? -1 : 0
+    );
+
+    setComments(sortedComments);
+
+    // Update local storage
+    const allComments = getCommentsFromLocalStorage();
+    const updatedAllComments = allComments.map((comment) =>
+      comment.thread === thread.id
+        ? updatedComments.find((c) => c.id === comment.id) || comment
+        : comment
+    );
+
+    saveCommentsToLocalStorage(updatedAllComments);
   };
 
   const handleAddReply = (parentId: number, content: string) => {
-    // Retrieve the logged-in user from localStorage
     const storedUser = localStorage.getItem("user");
-
-    // Check if the user exists
     if (!storedUser) {
       setError("Please log in to reply");
       return;
     }
 
-    const { username } = JSON.parse(storedUser); // Extract the username from stored user data
+    const { username } = JSON.parse(storedUser);
 
     const newReply: ThreadComment = {
       id: Date.now(),
       thread: thread.id,
       content,
-      creator: { userName: username }, // Use the stored username here
+      creator: { userName: username },
       creationDate: new Date().toISOString(),
       replies: [],
-      parentCommentId: parentId, // Include parentCommentId here
+      parentCommentId: parentId,
     };
 
     const updateReplies = (comments: ThreadComment[]): ThreadComment[] => {
@@ -133,10 +141,6 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
     const updatedComments = updateReplies(comments);
     setComments(updatedComments);
-
-    // Log the new reply and the updated comments
-    console.log("New Reply Added:", newReply);
-    console.log("Updated Comments:", updatedComments);
 
     const allComments = getCommentsFromLocalStorage();
     const updatedAllComments = [
