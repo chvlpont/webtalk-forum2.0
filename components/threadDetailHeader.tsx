@@ -14,6 +14,8 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
+  console.log(thread.category);
+
   useEffect(() => {
     // Check if the user is logged in
     const storedUser = localStorage.getItem("user");
@@ -79,27 +81,56 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
           {showMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-gray-800 bg-opacity-90 border border-gray-600 rounded shadow-lg">
               <ul className="py-2">
-                {isLocked ? (
-                  <li
-                    onClick={handleUnlock}
-                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-gray-300"
-                  >
-                    <FaUnlock className="mr-2" /> Unlock Thread
-                  </li>
-                ) : (
-                  <li
-                    onClick={handleLock}
-                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-gray-300"
-                  >
-                    <FaLock className="mr-2" /> Lock Thread
-                  </li>
+                {thread.category === "QNA" && (
+                  <>
+                    {isLocked ? (
+                      <li
+                        onClick={handleUnlock}
+                        className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-gray-300"
+                      >
+                        <FaUnlock className="mr-2" /> Unlock QNA
+                      </li>
+                    ) : (
+                      <li
+                        onClick={handleLock}
+                        className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-gray-300"
+                      >
+                        <FaLock className="mr-2" /> Lock QNA
+                      </li>
+                    )}
+                    <li
+                      onClick={confirmDelete}
+                      className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-red-500"
+                    >
+                      <FaTrash className="mr-2" /> Delete QNA
+                    </li>
+                  </>
                 )}
-                <li
-                  onClick={confirmDelete}
-                  className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-red-500"
-                >
-                  <FaTrash className="mr-2" /> Delete Thread
-                </li>
+                {thread.category === "THREAD" && (
+                  <>
+                    {isLocked ? (
+                      <li
+                        onClick={handleUnlock}
+                        className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-gray-300"
+                      >
+                        <FaUnlock className="mr-2" /> Unlock Thread
+                      </li>
+                    ) : (
+                      <li
+                        onClick={handleLock}
+                        className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-gray-300"
+                      >
+                        <FaLock className="mr-2" /> Lock Thread
+                      </li>
+                    )}
+                    <li
+                      onClick={confirmDelete}
+                      className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center text-red-500"
+                    >
+                      <FaTrash className="mr-2" /> Delete Thread
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           )}
@@ -125,7 +156,8 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
         <div className="fixed inset-0 bg-gray-900 bg-opacity-70 flex justify-center items-center z-50">
           <div className="bg-gray-800 text-white rounded-lg p-6 shadow-lg">
             <p className="mb-4 text-center">
-              Are you sure you want to delete this thread?
+              Are you sure you want to delete this{" "}
+              {thread.category === "QNA" ? "QNA" : "Thread"}?
             </p>
             <div className="flex justify-center space-x-4">
               <button
