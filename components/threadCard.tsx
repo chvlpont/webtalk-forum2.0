@@ -9,18 +9,28 @@ type ThreadCardProps = {
 };
 
 const ThreadCard: React.FC<ThreadCardProps> = ({ thread, isLoggedIn }) => {
+  // Define colors for categories
+  const categoryColors = {
+    QNA: "text-[#B7487E]", // Pink color for QNA
+    THREAD: "text-[#48B781]", // Green color for THREAD
+  };
+
   return (
     <li className="mb-4">
       {isLoggedIn ? (
         <Link
           href={`/${thread.id}`}
-          className={`block p-4 rounded-lg shadow-lg transition duration-200 ease-in-out border ${
+          className={`block p-4 rounded-lg shadow-lg transition duration-300 ease-in-out border ${
             thread.locked
               ? "bg-gray-900 bg-opacity-60 border-gray-600 cursor-pointer"
               : "bg-gray-800 bg-opacity-50 border-gray-700 hover:bg-opacity-70 hover:shadow-xl"
           }`}
         >
-          <p className="text-xs font-bold text-gray-300 mb-1">
+          <p
+            className={`text-xs font-bold mb-1 ${
+              categoryColors[thread.category] || "text-gray-300"
+            }`}
+          >
             r/{thread.category}
           </p>
 
@@ -62,7 +72,11 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, isLoggedIn }) => {
           className="block bg-gray-800 bg-opacity-50 border border-gray-700 p-4 rounded-lg shadow-lg relative group"
           title="Log in to view thread"
         >
-          <p className="text-xs font-bold text-gray-300 mb-1">
+          <p
+            className={`text-xs font-bold mb-1 ${
+              categoryColors[thread.category] || "text-gray-300"
+            }`}
+          >
             r/{thread.category}
           </p>
 
