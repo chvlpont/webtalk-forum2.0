@@ -51,22 +51,22 @@ const CreateThread = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-extrabold text-center mb-8 text-gray-800">
+      <div className="w-full max-w-lg p-8 bg-gray-800 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-extrabold text-center mb-8 text-gray-100">
           Create New Thread
         </h1>
 
         <div className="mb-6">
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-300 mb-2"
           >
             Title
           </label>
           <input
             id="title"
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-black"
+            className="w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             placeholder="Enter the title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -76,13 +76,13 @@ const CreateThread = () => {
         <div className="mb-6">
           <label
             htmlFor="category"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-300 mb-2"
           >
             Category
           </label>
           <select
             id="category"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-black"
+            className="w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             value={category}
             onChange={(e) => setCategory(e.target.value as ThreadCategory)}
           >
@@ -94,13 +94,13 @@ const CreateThread = () => {
         <div className="mb-6">
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-300 mb-2"
           >
             Description
           </label>
           <textarea
             id="description"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-black"
+            className="w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             placeholder="Enter the description"
             rows={5}
             value={description}
@@ -112,14 +112,14 @@ const CreateThread = () => {
         <div className="mb-6">
           <label
             htmlFor="tags"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-300 mb-2"
           >
             Tags
           </label>
           <input
             id="tags"
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-black"
+            className="w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             placeholder="Enter tags separated by commas"
             onChange={(e) => {
               const tagsArray = e.target.value
