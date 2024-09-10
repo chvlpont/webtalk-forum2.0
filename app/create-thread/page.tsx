@@ -10,6 +10,7 @@ const CreateThread = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState<ThreadCategory>("THREAD");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState<ThreadTag[]>([]); // Initialize tags
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -20,6 +21,10 @@ const CreateThread = () => {
       return;
     }
 
+    // Retrieve the logged-in user from localStorage
+    const storedUser = localStorage.getItem("user");
+    const username = storedUser ? JSON.parse(storedUser).username : "guest";
+
     const threads = getThreadsFromLocalStorage();
     const newThread: Thread = {
       id: Date.now(),
@@ -27,8 +32,9 @@ const CreateThread = () => {
       category,
       creationDate: new Date().toISOString(),
       description,
-      creator: { userName: "guest", password: "password" },
+      creator: { userName: username },
       commentCount: 0,
+      tags, // Include the tags property
     };
 
     threads.push(newThread);
@@ -37,6 +43,7 @@ const CreateThread = () => {
     setTitle("");
     setCategory("THREAD");
     setDescription("");
+    setTags([]); // Reset tags
     setError(null);
 
     router.push(`/${newThread.id}`);
@@ -98,6 +105,34 @@ const CreateThread = () => {
             rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+
+        {/* Add input for tags if needed */}
+        <div className="mb-6">
+          <label
+            htmlFor="tags"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Tags
+          </label>
+          <input
+            id="tags"
+            type="text"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-black"
+            placeholder="Enter tags separated by commas"
+            onChange={(e) => {
+              const tagsArray = e.target.value
+                .split(",")
+                .map((tag) => tag.trim())
+                .filter((tag) => tag !== "");
+              setTags(
+                tagsArray.map((tag) => ({
+                  id: Date.now() + Math.random(),
+                  name: tag,
+                }))
+              );
+            }}
           />
         </div>
 

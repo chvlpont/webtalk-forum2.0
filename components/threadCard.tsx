@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { FaRegCommentAlt, FaLock } from "react-icons/fa";
@@ -15,9 +16,8 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, isLoggedIn }) => {
     THREAD: "text-[#48B781]", // Green color for THREAD
   };
 
-  // Get the username from local storage
-  const storedUser = isLoggedIn ? localStorage.getItem("user") : null;
-  const username = storedUser ? JSON.parse(storedUser).username : "Anonymous";
+  // Get the username from the thread's creator property
+  const username = thread.creator.userName;
 
   return (
     <li className="mb-4">
