@@ -47,19 +47,12 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className="px-4 py-4 flex justify-between items-center w-full"
+      className="px-[10%] py-4 flex justify-between items-center w-full"
       style={{ boxShadow: "0px 1px 0px rgba(229, 231, 235, 0.5)" }}
     >
-      <div className="flex-1">
+      <div className="flex-1 text-center">
         <Link href="/">
-          <div className="cursor-pointer">
-            <Image
-              src="/räddit.png"
-              alt="Räddit Logo"
-              width={100}
-              height={40}
-            />
-          </div>
+          <span className="text-2xl font-bold text-white">WEBTALK</span>
         </Link>
       </div>
       <div className="flex-1 text-center">
@@ -78,13 +71,13 @@ const Header: React.FC = () => {
         {!isLoggedIn ? (
           <>
             <button
-              className="bg-gray-500 text-white rounded-full hover:opacity-70 px-4 py-2 text-sm mr-2"
+              className="bg-gray-700 text-gray-200 rounded-full hover:bg-gray-600 px-4 py-2 text-sm mr-2 transition"
               onClick={openLoginModal}
             >
               Log in
             </button>
             <button
-              className="bg-gray-500 text-white rounded-full hover:opacity-70 px-4 py-2 text-sm"
+              className="bg-gray-700 text-gray-200 rounded-full hover:bg-gray-600 px-4 py-2 text-sm transition"
               onClick={openRegisterModal}
             >
               Register
