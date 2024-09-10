@@ -14,8 +14,6 @@ const ThreadDetailHeader: React.FC<ThreadDetailHeaderProps> = ({ thread }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
-  console.log(thread.category);
-
   useEffect(() => {
     // Check if the user is logged in
     const storedUser = localStorage.getItem("user");

@@ -103,6 +103,8 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   };
 
   const handleAddReply = (parentId: number, content: string) => {
+    console.log(`Adding reply to comment with parentCommentId: ${parentId}`); // Log the parentCommentId
+
     const storedUser = localStorage.getItem("user");
     if (!storedUser) {
       setError("Please log in to reply");

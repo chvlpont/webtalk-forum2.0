@@ -37,12 +37,10 @@ const Header: React.FC = () => {
     setIsLoggedIn(false);
     setUsername("");
     window.location.reload();
-    console.log("Logged out");
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
-    console.log(setSearchQuery);
   };
 
   return (
