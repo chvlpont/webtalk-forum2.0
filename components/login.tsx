@@ -23,11 +23,9 @@ const Login: React.FC<LoginProps> = ({
         setError("");
         window.location.reload(); // Page refresh
       } else {
-        console.log("Incorrect username or password");
         setError("Incorrect username or password");
       }
     } else {
-      console.log("No user found. Please register.");
       setError("No user found. Please register.");
     }
   };
@@ -38,34 +36,33 @@ const Login: React.FC<LoginProps> = ({
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-md mx-auto p-6 bg-gray-900 rounded-lg">
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <input
         type="text"
         placeholder="Username"
-        className="w-full p-2 mb-4 border rounded-md text-black"
+        className="w-full p-2 mb-4 bg-gray-700 border border-transparent rounded-md placeholder-gray-500 text-gray-200 focus:ring-2 focus:ring-blue-500"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
         type="password"
         placeholder="Password"
-        className="w-full p-2 mb-4 border rounded-md text-black"
+        className="w-full p-2 mb-4 bg-gray-700 border border-transparent rounded-md placeholder-gray-500 text-gray-200 focus:ring-2 focus:ring-blue-500"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <button
-        className="w-full p-2 bg-blue-500 text-white rounded-md"
+        className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         onClick={handleLogin}
       >
         Login
       </button>
 
-      {/* Add a line break and center the register option */}
       <div className="mt-4 text-center">
-        <p className="text-black">Don't have an account?</p>
+        <p className="text-gray-400">Don't have an account?</p>
         <button
-          className="text-blue-500 underline"
+          className="text-blue-400 underline hover:text-blue-500"
           onClick={handleRegisterClick}
         >
           Register

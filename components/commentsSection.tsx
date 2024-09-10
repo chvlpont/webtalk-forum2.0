@@ -170,12 +170,12 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
             placeholder="Add a comment"
             value={commentContent}
             onChange={(e) => setCommentContent(e.target.value)}
-            className="w-full border rounded p-2 mt-4 text-black"
+            className="w-full bg-gray-800 border border-gray-600 rounded p-2 mt-4 text-white placeholder-gray-400"
             disabled={isLocked}
           />
           <button
             onClick={handleAddComment}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             disabled={isLocked}
           >
             Add Comment

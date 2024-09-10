@@ -110,11 +110,11 @@ const Header: React.FC = () => {
           onClick={closeLoginModal}
         >
           <div
-            className="bg-white rounded-lg shadow-lg p-6 relative max-w-sm mx-auto"
+            className="bg-gray-900 text-white rounded-lg shadow-lg p-6 relative max-w-sm mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-300"
               onClick={closeLoginModal}
             >
               ×
@@ -134,11 +134,11 @@ const Header: React.FC = () => {
           onClick={closeRegisterModal}
         >
           <div
-            className="bg-white rounded-lg shadow-lg p-6 relative max-w-sm mx-auto"
+            className="bg-gray-900 text-white rounded-lg shadow-lg p-6 relative max-w-sm mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-300"
               onClick={closeRegisterModal}
             >
               ×

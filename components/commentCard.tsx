@@ -92,8 +92,8 @@ const CommentCard: React.FC<CommentCardProps> = ({
   return (
     <div
       className={`relative border p-3 rounded-lg mb-2 ${
-        isSelected ? "border-4 border-green-500" : "border border-gray-300"
-      } bg-gray-100`}
+        isSelected ? "border-4 border-green-500" : "border border-gray-700"
+      } bg-gray-800 bg-opacity-70 text-gray-200`}
     >
       {isSelected && isQNA && (
         <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs p-1 rounded-lg">
@@ -105,31 +105,31 @@ const CommentCard: React.FC<CommentCardProps> = ({
         className="absolute top-2 right-2 cursor-pointer"
         onClick={handleIconClick}
       >
-        <FaEllipsisH className="text-gray-500 hover:text-gray-700 transform rotate-90" />
+        <FaEllipsisH className="text-gray-400 hover:text-gray-300 transform rotate-90" />
       </div>
 
       {showDropdown && isQNA && (
-        <div className="absolute top-8 right-2 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+        <div className="absolute top-8 right-2 bg-gray-800 bg-opacity-90 border border-gray-600 rounded-lg shadow-lg z-10">
           <button
             onClick={() =>
               handleDropdownItemClick(
                 isSelected ? "unmark-as-answer" : "mark-as-answer"
               )
             }
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left"
+            className="block px-4 py-2 text-gray-200 hover:bg-gray-700 w-full text-left"
           >
             {isSelected ? "Unmark as answer" : "Mark as answer"}
           </button>
         </div>
       )}
 
-      <div className="flex items-center text-xs text-gray-500 mb-1">
+      <div className="flex items-center text-xs text-gray-400 mb-1">
         <span>u/{comment.creator.userName}</span>
         <span className="mx-1">•</span>
         <span>{formatDistanceToNow(new Date(comment.creationDate))} ago</span>
       </div>
 
-      <p className="text-sm text-gray-800">
+      <p className="text-sm text-gray-200">
         {isCensored ? censorText(comment.content) : comment.content}
       </p>
 
@@ -137,7 +137,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
         <div className="mt-2">
           <button
             onClick={() => setIsCensored((prev) => !prev)}
-            className="text-gray-500 text-xs"
+            className="text-gray-400 text-xs"
           >
             {isCensored ? "Show uncensored" : "Censor"}
           </button>
@@ -148,7 +148,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
         <>
           <button
             onClick={() => setIsReplyFormVisible((prev) => !prev)}
-            className="text-blue-500 underline mt-2"
+            className="text-blue-400 underline mt-2"
           >
             {isReplyFormVisible ? "Cancel Reply" : "Reply"}
           </button>
@@ -159,11 +159,11 @@ const CommentCard: React.FC<CommentCardProps> = ({
                 placeholder="Add a reply"
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
-                className="w-full border rounded p-2 text-black"
+                className="w-full border border-gray-600 rounded p-2 text-gray-200 bg-gray-900 placeholder-gray-500"
               />
               <button
                 onClick={handleReplySubmit}
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
                 Add Reply
               </button>

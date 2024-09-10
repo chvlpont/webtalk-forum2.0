@@ -17,11 +17,9 @@ const Register: React.FC<RegisterProps> = ({
   const handleRegister = () => {
     if (username && password) {
       localStorage.setItem("user", JSON.stringify({ username, password }));
-      console.log("User registered");
       setError("");
       toast.success("Successfully registered!");
     } else {
-      console.log("Failed to register");
       setError("Please fill out all fields.");
     }
   };
@@ -32,25 +30,25 @@ const Register: React.FC<RegisterProps> = ({
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-md mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
       <Toaster />
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <input
         type="text"
         placeholder="Username"
-        className="w-full p-2 mb-4 border rounded-md text-black"
+        className="w-full p-2 mb-4 bg-gray-700 border border-gray-600 rounded-md placeholder-gray-500 text-gray-200"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
         type="password"
         placeholder="Password"
-        className="w-full p-2 mb-4 border rounded-md text-black"
+        className="w-full p-2 mb-4 bg-gray-700 border border-gray-600 rounded-md placeholder-gray-500 text-gray-200"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <button
-        className="w-full p-2 bg-blue-500 text-white rounded-md"
+        className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         onClick={handleRegister}
       >
         Register
@@ -58,8 +56,11 @@ const Register: React.FC<RegisterProps> = ({
 
       {/* Add a line break and center the login option */}
       <div className="mt-4 text-center">
-        <p className="text-black">Already have an account?</p>
-        <button className="text-blue-500 underline" onClick={handleLoginClick}>
+        <p className="text-gray-400">Already have an account?</p>
+        <button
+          className="text-blue-400 underline hover:text-blue-500"
+          onClick={handleLoginClick}
+        >
           Log in
         </button>
       </div>
