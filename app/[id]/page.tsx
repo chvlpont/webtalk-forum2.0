@@ -23,14 +23,16 @@ const ThreadPage = () => {
       const selectedThread = storedThreads.find((t) => t.id === Number(id));
       setThread(selectedThread || null);
 
-      const threadComments = getCommentsFromLocalStorage(Number(id));
-      setComments(threadComments);
+      const threadComments = getCommentsFromLocalStorage();
+      setComments(
+        threadComments.filter((comment) => comment.thread === Number(id))
+      );
     }
   }, [id]);
 
   const handleAddComment = (newComment: ThreadComment) => {
     saveCommentToLocalStorage(newComment);
-    setComments([...comments, newComment]);
+    setComments((prevComments) => [...prevComments, newComment]);
 
     if (thread) {
       const updatedThread = {
@@ -65,11 +67,10 @@ const ThreadPage = () => {
       />
       <div ref={commentsRef}>
         <CommentsSection
-          threadId={thread.id}
+          thread={thread} // Pass the thread prop
           initialComments={comments}
           onAddComment={handleAddComment}
           isLocked={thread.locked ?? false} // Ensure isLocked is provided
-          thread={thread} // Ensure thread is passed
         />
       </div>
     </div>
