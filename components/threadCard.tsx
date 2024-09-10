@@ -15,6 +15,10 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, isLoggedIn }) => {
     THREAD: "text-[#48B781]", // Green color for THREAD
   };
 
+  // Get the username from local storage
+  const storedUser = isLoggedIn ? localStorage.getItem("user") : null;
+  const username = storedUser ? JSON.parse(storedUser).username : "Anonymous";
+
   return (
     <li className="mb-4">
       {isLoggedIn ? (
@@ -35,7 +39,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, isLoggedIn }) => {
           </p>
 
           <div className="flex items-center text-xs text-gray-400 mb-2">
-            <span>u/Username</span>
+            <span>u/{username}</span>
             <span className="mx-1">•</span>
             <span>
               {formatDistanceToNow(new Date(thread.creationDate))} ago
@@ -81,7 +85,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, isLoggedIn }) => {
           </p>
 
           <div className="flex items-center text-xs text-gray-400 mb-2">
-            <span>u/Username</span>
+            <span>u/{username}</span>
             <span className="mx-1">•</span>
             <span>
               {formatDistanceToNow(new Date(thread.creationDate))} ago
